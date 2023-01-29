@@ -29,6 +29,11 @@ public class KeepsService
     {
       throw new Exception($"no keep at id:{id}");
     }
+    if (keep.CreatorId != userId)
+    {
+      keep.Views++;
+      Update(keep);
+    }
     return keep;
   }
 
@@ -54,5 +59,10 @@ public class KeepsService
     }
     _repo.Remove(id);
     return $"{original.Name} was removed";
+  }
+
+  internal List<Keep> getKeepsByProfileId(string profileId)
+  {
+    return _repo.getKeepsByProfileId(profileId);
   }
 }

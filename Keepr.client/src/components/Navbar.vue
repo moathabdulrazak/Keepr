@@ -1,29 +1,31 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
+  <nav class="navbar navbar-expand-lg nav-bar-color  px-4 elevation-2">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
-      <div class="d-flex flex-column align-items-center">
-        <img alt="logo" src="../assets/img/cw-logo.png" height="45" />
-      </div>
+      <button class="btn btn-color">Home</button>
     </router-link>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarText"
-      aria-controls="navbarText"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
+    <div class="dropdown">
+      <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+        aria-expanded="false">
+        create
+      </button>
+      <ul class="dropdown-menu  dropdown-color" aria-labelledby="dropdownMenuButton1">
+
+        <button data-bs-toggle="modal" data-bs-target="#keepForm" class="btn"> Create Keep</button>
+        <button class="btn"> Create Vault</button>
+      </ul>
+    </div>
+    <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+      aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
-    </button>
+    </button> -->
+    <h1 class="text-center text-vfx col-9">Kee<span class="text-vfx2">p</span>r </h1>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto">
         <li>
-          <router-link :to="{ name: 'About' }" class="btn text-success lighten-30 selectable text-uppercase">
-            About
-          </router-link>
+
         </li>
       </ul>
+
       <!-- LOGIN COMPONENT HERE -->
       <Login />
     </div>
@@ -61,4 +63,20 @@ a:hover {
   }
 }
 
+.dropdown-color {
+  background-color: #DED6E9;
+}
+
+.nav-bar-color {
+  background-color: #FEF6F0;
+}
+
+.btn-color {
+  background-color: #E9D8D6;
+}
+
+.text-vfx2 {
+  color:
+    #3ca4e5;
+}
 </style>

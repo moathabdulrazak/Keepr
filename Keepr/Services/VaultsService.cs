@@ -16,9 +16,11 @@ public class VaultsService
   internal Vault GetVaultById(int id, string userId)
   {
     Vault vault = _repo.GetVaultById(id);
-    if (vault == null)
+    var creator = vault.CreatorId == userId;
+    var privateVault = vault.IsPrivate == true;
+    if (!creator && privateVault)
     {
-      throw new Exception($"no keep at id:{id}");
+      throw new Exception("privated vault");
     }
     return vault;
   }

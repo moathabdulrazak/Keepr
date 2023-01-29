@@ -40,6 +40,25 @@ public class VaultsRepository
       }, new { id }).FirstOrDefault();
   }
 
+  internal List<Vault> getVaultsByProfileId(string profileId)
+  {
+    string sql = @"
+    SELECT
+    v.*,
+    prof.*
+    FROM vaults v 
+    JOIN accounts prof ON prof.id = v.creatorId
+    WHERE v.creatorId = @profileId
+    AND v.isPrivate = false
+    GROUP BY v.id;
+    ";
+    return _db.Query<Vault, Account, Vault>(sql, (vault, profile) =>
+    {
+      vault.Creator = profile;
+      return vault;
+    }, new { profileId }).ToList();
+  }
+
   internal void Remove(int id)
   {
     string sql = @"

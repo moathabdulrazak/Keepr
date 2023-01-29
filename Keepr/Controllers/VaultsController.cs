@@ -6,12 +6,13 @@ public class VaultsController : ControllerBase
 {
   private readonly VaultsService _vaultsService;
   private readonly Auth0Provider _auth;
+  private readonly VaultKeepsService _vKeepService;
 
-
-  public VaultsController(VaultsService vaultsService, Auth0Provider auth)
+  public VaultsController(VaultsService vaultsService, Auth0Provider auth, VaultKeepsService vKeepService)
   {
     _vaultsService = vaultsService;
     _auth = auth;
+    _vKeepService = vKeepService;
   }
 
 
@@ -34,7 +35,7 @@ public class VaultsController : ControllerBase
   }
 
   [HttpGet("{id}")]
-  public async Task<ActionResult<Keep>> GetVaultById(int id)
+  public async Task<ActionResult<Vault>> GetVaultById(int id)
   {
     try
     {
@@ -75,6 +76,22 @@ public class VaultsController : ControllerBase
       Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
       string message = _vaultsService.Remove(id, userInfo.Id);
       return Ok(message);
+    }
+    catch (Exception e)
+    {
+      return BadRequest(e.Message);
+    }
+  }
+
+  [HttpGet("{vaultId}/keeps")]
+  public async Task<ActionResult<List<VaultedKeep>>> GetKeepsByVaultId(int vaultId)
+  {
+    try
+    {
+      Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+
+      List<VaultedKeep> vaultKeeps = _vKeepService.GetVaultedKeepById(vaultId, userInfo?.Id);
+      return Ok(vaultKeeps);
     }
     catch (Exception e)
     {
