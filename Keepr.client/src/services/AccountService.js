@@ -15,7 +15,6 @@ class AccountService {
 
   async getMyKeeps() {
     const res = await api.get('/account/keeps')
-    console.log(res.data);
     AppState.myAccountKeeps = res.data
   }
   async getMyVaults() {
