@@ -76,7 +76,7 @@ LEFT JOIN vaultKeeps vk ON vk.keepId = k.id
     LEFT JOIN vaultKeeps  vKeep ON vKeep.keepId = k.Id
     WHERE k.creatorId = @profileId;
     ";
-    return _db.Query<Keep, Account, Keep>(sql, (keep, profile) =>
+    return _db.Query<Keep, Profile, Keep>(sql, (keep, profile) =>
     {
       keep.Creator = profile;
       return keep;

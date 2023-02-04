@@ -1,7 +1,7 @@
 <template>
 
   <div @click="setActiveKeep" data-bs-toggle="modal" data-bs-target="#activeKeepModal"
-    class="card bg-dark text-white border border-0 elevation-5 m-3 hover ">
+    class="card bg-dark text-white border border-0 elevation-5 m-3 hover masonry ">
 
     <img :src="keep.img" class="card-img" alt="...">
     <div class="card-img-overlay d-flex align-items-end justify-content-between info">
@@ -12,8 +12,9 @@
         <span :title="keep.name" :aria-label="keep.name" class="hovering">{{ keep.name }}</span>
       </div>
 
-      <div @click="deleteKeep" v-if="keep.creatorId == account.id" class=" text-end hovering">
-        <i class="mdi mdi-trash-can fs-5 remove rounded-5 px-1 hoverable"></i>
+      <div title="trash keep?" @click="deleteKeep" v-if="keep.creatorId == account.id"
+        class=" text-end hovering curoser">
+        <i class="mdi mdi-trash-can fs-5 remove rounded-5 px-1 "></i>
       </div>
     </div>
   </div>
@@ -77,37 +78,61 @@ export default {
 }
 
 .hovering {
-  opacity: 0;
+  opacity: 1;
 }
 
 .profilePic {
   opacity: 100;
 }
 
-.info {
-  display: none;
+.curoser {
+  cursor: pointer;
 }
 
-.info:hover {
-  .hovering {
-    opacity: 1;
-    transition: all 1.0s ease;
-  }
+// .masonry {
+//   columns: 4;
+// }
 
-  .profilePic {
-    opacity: 1;
-    transition: all 1.5s ease;
-  }
+.lock {
+  transform: translateY(-6.5rem) translateX(19em);
+}
 
+.fs {
+  font-size: 40px;
+  font-weight: 700;
 }
 
 @media screen AND (max-width: 768px) {
-  .hovering {
-    font-size: small;
-  }
+  // .masonry {
+  //   columns: 2;
+  // }
 
-  .profilePic {
+  .info {
     display: none;
   }
+
+  .info:hover {
+    .hovering {
+      opacity: 1;
+      transition: all 1.0s ease;
+    }
+
+    .profilePic {
+      opacity: 1;
+      transition: all 1.5s ease;
+    }
+
+  }
+
+  @media screen AND (max-width: 768px) {
+    .hovering {
+      font-size: small;
+    }
+
+    .profilePic {
+      display: none;
+    }
+  }
+
 }
 </style>

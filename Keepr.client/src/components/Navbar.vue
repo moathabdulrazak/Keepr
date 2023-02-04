@@ -4,14 +4,13 @@
       <button class="btn btn-color">Home</button>
     </router-link>
     <div class="dropdown">
-      <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-        aria-expanded="false">
+      <button v-if="Account.id" class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+        data-bs-toggle="dropdown" aria-expanded="false">
         create
       </button>
       <ul class="dropdown-menu  dropdown-color" aria-labelledby="dropdownMenuButton1">
-
         <button data-bs-toggle="modal" data-bs-target="#keepForm" class="btn"> Create Keep</button>
-        <button class="btn"> Create Vault</button>
+        <button data-bs-toggle="modal" data-bs-target="#newVault" class="btn"> Create Vault</button>
       </ul>
     </div>
     <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
@@ -19,6 +18,10 @@
       <span class="navbar-toggler-icon"></span>
     </button> -->
     <h1 class="text-center text-vfx col-9">Kee<span class="text-vfx2">p</span>r </h1>
+    <!-- <div>
+
+      <img class="img-fluid justify-content-center m-uto" src="src\assets\img\Keepr logo.png" alt="">
+    </div> -->
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto">
         <li>
@@ -33,10 +36,15 @@
 </template>
 
 <script>
+import { AppState } from "../AppState.js";
 import Login from './Login.vue'
+import { computed } from "@vue/reactivity";
+import { Account } from "../models/Account.js";
 export default {
   setup() {
-    return {}
+    return {
+      Account: computed(() => AppState.account)
+    }
   },
   components: { Login }
 }
@@ -77,6 +85,6 @@ a:hover {
 
 .text-vfx2 {
   color:
-    #3ca4e5;
+    #7c4dbd;
 }
 </style>

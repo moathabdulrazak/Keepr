@@ -31,12 +31,13 @@
             </div>
             <div class="d-flex justify-content-between">
               <div class="">
-                <CreateKeepForVault />
               </div>
-
               <div class=" other" title="Add to a vault" aria-label="Add to a vault.">
                 <div class="d-flex justify-content-between">
-
+                  <span>
+                    <button class="btn border border-3 p-2 mt-4 hover"
+                      @click="removeFromKeep(profilesKeeps.vaultKeepId)">Remove</button>
+                  </span>
                   <span v-if="account.id == keep.creatorId">
                     <div class="text-white mt-3" data-bs-dismiss="modal" title="Creator name" aria-label="Creator Name">
                       <router-link :to="{ name: 'Account', params: { id: keep?.creator.id } }">
@@ -70,27 +71,35 @@
 
 <script>
 import { AppState } from '../AppState';
-import { computed } from 'vue';
-import CreateKeepForVault from "./CreateKeepForVault.vue";
-import Pop from "../utils/Pop.js";
+import { computed, reactive, onMounted } from 'vue';
 import { vaultsKeepsService } from "../services/VaultKeepsService.js";
+import Pop from "../utils/Pop.js";
+import { logger } from "../utils/Logger.js";
 export default {
-  // props: {
-  //   keep: {
-  //     type: Object,
-  //     required: true,
-  //   }
-  // },
   setup() {
     return {
+      vaultKeeps: computed(() => AppState.vaultKeeps),
       keep: computed(() => AppState.activeKeep),
       account: computed(() => AppState.account),
-      vault: computed(() => AppState.activeVault),
-      vaultKeeps: computed(() => AppState.vaultKeeps),
-
-    };
-  },
-  components: { CreateKeepForVault }
+      profilesKeeps: computed(() => AppState.profilesKeeps.find(p => p.id == AppState.activeKeep.id)),
+      async removeFromKeep(id) {
+        logger.log(id)
+        try {
+          debugger
+          const yes = await Pop.confirm();
+          if (!yes) {
+            return;
+          }
+          let vaultKeep = AppState.profilesKeeps.find(c => c.id == id)
+          logger.log(vaultKeep)
+          await vaultsKeepsService.removeFromVault(id)
+          Pop.success("Removed from vault.")
+        } catch (error) {
+          Pop.error(error)
+        }
+      }
+    }
+  }
 };
 </script>
 
@@ -141,6 +150,5 @@ export default {
   .name {
     margin-left: 1rem
   }
-
 }
 </style>

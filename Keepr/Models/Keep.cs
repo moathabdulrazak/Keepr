@@ -10,5 +10,5 @@ public class Keep
   public int Views { get; set; }
   public int Kept { get; set; }
   public string CreatorId { get; set; }
-  public Account Creator { get; set; }
+  public Profile Creator { get; set; }
 }

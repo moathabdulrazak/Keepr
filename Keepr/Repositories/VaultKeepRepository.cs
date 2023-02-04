@@ -27,7 +27,7 @@ public class VaultKeepRepository
   {
     string sql = @"
         DELETE FROM vaultKeeps 
-        WHERE id = @vaultkeepId; 
+        WHERE id = @vaultKeepId; 
         ";
     _db.Execute(sql, new { vaultKeepId });
   }
@@ -59,10 +59,10 @@ public class VaultKeepRepository
             GROUP BY vKeep.id
                 ;";
 
-    return _db.Query<VaultedKeep, Account, VaultedKeep>(sql, (keep, account) =>
+    return _db.Query<VaultedKeep, Profile, VaultedKeep>(sql, (keep, profile) =>
     {
-      keep.Creator = account;
-      keep.VaultKeepCreatorId = account.Id;
+      keep.Creator = profile;
+      keep.VaultKeepCreatorId = profile.Id;
       return keep;
     }, new { vaultId }).ToList();
   }

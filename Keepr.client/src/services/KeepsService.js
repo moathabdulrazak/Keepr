@@ -12,8 +12,10 @@ class KeepsService {
 
 
   async createKeep(body) {
+    debugger
     const res = await api.post('api/keeps', body)
     AppState.keeps.push(res.data)
+    AppState.myAccountKeeps.push(res.data)
   }
 
   async deleteKeep(keepId) {
@@ -25,9 +27,10 @@ class KeepsService {
   async setActiveKeep(keepId) {
     const res = await api.get(`api/keeps/${keepId}`)
     AppState.activeKeep = res.data
-    if (AppState.activeKeep.creatorId != AppState.account.id) {
-      AppState.activeKeep.viewCount++
-    }
+    // AppState.activeKeep.views++
+    // if (AppState.activeKeep.creatorId != AppState.account.id) {
+    //   AppState.activeKeep.views++
+    // }
   }
 }
 

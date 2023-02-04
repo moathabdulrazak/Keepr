@@ -15,7 +15,7 @@ public class VaultsRepository
       INSERT INTO vaults
         (name, `creatorId`, `img`, description, isPrivate)
       VALUES
-        (@Name, @CreatorId, Img, @Description, @IsPrivate);
+        (@Name, @CreatorId, @Img, @Description, @IsPrivate);
       SELECT LAST_INSERT_ID()
       ;";
 
@@ -33,9 +33,9 @@ public class VaultsRepository
     JOIN accounts ac ON ac.id = v.creatorId
     WHERE v.id = @id;
     ";
-    return _db.Query<Vault, Account, Vault>(sql, (vault, account) =>
+    return _db.Query<Vault, Profile, Vault>(sql, (vault, profile) =>
       {
-        vault.Creator = account;
+        vault.Creator = profile;
         return vault;
       }, new { id }).FirstOrDefault();
   }
@@ -52,7 +52,7 @@ public class VaultsRepository
     AND v.isPrivate = false
     GROUP BY v.id;
     ";
-    return _db.Query<Vault, Account, Vault>(sql, (vault, profile) =>
+    return _db.Query<Vault, Profile, Vault>(sql, (vault, profile) =>
     {
       vault.Creator = profile;
       return vault;

@@ -32,7 +32,7 @@ public class KeepsService
     if (keep.CreatorId != userId)
     {
       keep.Views++;
-      Update(keep);
+      _repo.Update(keep);
     }
     return keep;
   }
@@ -44,7 +44,6 @@ public class KeepsService
     original.Name = updateData.Name ?? original.Name;
     original.Description = updateData.Description ?? original.Description;
     original.Img = updateData.Img ?? original.Img;
-
     _repo.Update(original);
     return original;
 
